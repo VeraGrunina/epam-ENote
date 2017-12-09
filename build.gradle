@@ -2,7 +2,7 @@ group 'EpamSpringENote'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-
+//apply plugin: "org.hibernate.gradle.tools"
 sourceCompatibility = 1.8
 
 repositories {
@@ -10,5 +10,24 @@ repositories {
 }
 
 dependencies {
+    //compile 'mysql:mysql-connector-java'
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'com.h2database', name: 'h2'
+
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-gradle-plugin
+    compile group: 'org.hibernate', name: 'hibernate-gradle-plugin', version: '5.2.11.Final'
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.11.Final'
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '4.1.7.Final'
+    compile 'org.hibernate:hibernate-core:3.6.3.Final'
+
+    compile group: 'com.h2database', name: 'h2'
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-core
+    compile group: 'org.springframework', name: 'spring-core', version: '4.3.12.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-aop
+    compile group: 'org.springframework', name: 'spring-aop', version: '4.3.12.RELEASE'
+
 }

@@ -1,0 +1,24 @@
+spring:
+  application:
+    name:
+      enote
+  profiles:
+    active: dev
+### Datasource ###
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:./db
+    username: user
+    password: 123
+### JPA ###
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+security:
+  basic:
+    enabled: false
