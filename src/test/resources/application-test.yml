@@ -1,0 +1,33 @@
+info:
+ build:
+  name: 'enote_build_name'
+  description:
+  version: '@version@'
+
+springfox:
+ title: ${info.build.name}
+ description: ${info.build.description}
+ version: ${info.build.version}
+
+server:
+  port: ${PORT:8080}
+
+spring:
+  profiles:
+    active: test
+  datasource:
+    url: jdbc:h2:file:~/sample;INIT=CREATE SCHEMA IF NOT EXISTS DATABASE
+    username: "sa"
+    password: ""
+    driverClassName: org.h2.Driver
+
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate: database
+
+flyway:
+  enabled: false
