@@ -1,7 +1,0 @@
-CREATE TABLE `User` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(45) NOT NULL,
-  `user_login` varchar(45) NOT NULL,
-  `user_password` varchar(45) NOT NULL,
-  PRIMARY KEY (`user_id`)
-)

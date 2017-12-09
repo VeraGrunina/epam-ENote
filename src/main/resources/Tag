@@ -1,4 +1,0 @@
-CREATE TABLE `ENote`.`Tag` (
-  `tag_id` INT NOT NULL AUTO_INCREMENT,
-  `tag_name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`tag_id`));
