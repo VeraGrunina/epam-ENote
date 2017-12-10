@@ -1,0 +1,4 @@
+INSERT INTO USER
+(id, name, login, password)
+VALUES
+(13, 'Vera', 'vera76532', 'testPassword');

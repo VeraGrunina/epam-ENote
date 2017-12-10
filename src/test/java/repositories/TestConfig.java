@@ -1,13 +1,10 @@
-package config;
+package repositories;
 
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -27,14 +24,15 @@ import java.sql.SQLException;
 @PropertySource("database.properties")
 @EnableJpaRepositories("repositories")
 @ComponentScan(basePackages = "model")
-public class AppConfig {
+public class TestConfig {
 
     @Bean
     public DataSource h2dataSource() throws SQLException {
         return new EmbeddedDatabaseBuilder()
-                .setName("realDatabase")
+                .setName("testDatabase")
                 .setType(EmbeddedDatabaseType.H2)
-                .addScript("classpath:src/java/resources/init.sql")
+                .addScript("init.sql")
+                .addScript("insertInDatabase")
                 .build();
     }
 
