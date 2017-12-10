@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.*;
 
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 @Transactional
@@ -19,6 +20,10 @@ public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Test
+    public void getByNotebook() throws Exception {
+
+    }
     @Test
     public void readTest() throws Exception {
         User userRead = userRepository.getOne(13L);

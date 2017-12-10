@@ -1,70 +1,35 @@
 package model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @Entity
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue
-    @Column(name = "userId")
+    @Column(name = "id")
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId")
-    private Long userId;
+    @JoinColumn(name = "id")
+    @NonNull
+    private Long id;
 
     @Column(name = "userName")
+    @NonNull
     private String name;
 
-    @Column(name = "login")
-    private String login;
+    @Column(name = "email")
+    @NonNull
+    private String email;
 
+    @NonNull
     private String password;
+
     private List<Notebook> notebookList = new ArrayList<>();
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<Notebook> getNotebookList() {
-        return notebookList;
-    }
-
-    public void setNotebookList(List<Notebook> notebookList) {
-        this.notebookList = notebookList;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
 }
