@@ -14,6 +14,7 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.test.context.ContextConfiguration;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -61,14 +62,5 @@ public class TestConfig {
         return new JpaTransactionManager(emf);
     }
 
-    @Bean(name = "sessionFactory")
-    public SessionFactory sessionFactory() throws IOException, SQLException {
-        LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
-        sessionFactoryBean.setDataSource(h2dataSource());
-        sessionFactoryBean.setPackagesToScan("model");
-        sessionFactoryBean.setAnnotatedPackages("model");
-        sessionFactoryBean.afterPropertiesSet();
-        return sessionFactoryBean.getObject();
-    }
 
 }
