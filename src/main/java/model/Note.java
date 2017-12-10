@@ -1,15 +1,23 @@
 package model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import lombok.Data;
+
+import javax.persistence.*;
 
 @Entity
+@Data
 public class Note {
 
     @Id
     @GeneratedValue
-    private int noteId;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "tagId")
+    private Long noteId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "notebookId")
+    private Long notebookId;
+
     private String name;
 
 }

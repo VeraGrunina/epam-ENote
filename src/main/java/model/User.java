@@ -2,9 +2,7 @@ package model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +12,17 @@ public class User {
 
     @Id
     @GeneratedValue
-    private int userId;
+    @Column(name = "userId")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId")
+    private Long userId;
+
+    @Column(name = "userName")
     private String name;
+
+    @Column(name = "email")
     private String email;
+
     private String password;
     private List<Notebook> notebookList = new ArrayList<>();
 

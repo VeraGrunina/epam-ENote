@@ -1,12 +1,18 @@
 package model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.oracle.webservices.internal.api.databinding.DatabindingMode;
+import lombok.Data;
 
+import javax.persistence.*;
+
+@Entity
+@Data
 public class Tag {
     @Id
     @GeneratedValue
-    private int tagId;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "noteId")
+    private Long tagId;
 
     private String name;
 }
