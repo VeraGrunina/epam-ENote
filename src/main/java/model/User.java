@@ -10,10 +10,13 @@ import java.util.List;
 @Entity
 @RequiredArgsConstructor
 @NoArgsConstructor
+@Table(name = "user")
 public class User {
 
+    // GenerationType.IDENTITY - означает AutoIncrement
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id")
@@ -31,5 +34,5 @@ public class User {
     @NonNull
     private String password;
 
-    private List<Notebook> notebookList = new ArrayList<>();
+    //private List<Notebook> notebookList = new ArrayList<>();
 }

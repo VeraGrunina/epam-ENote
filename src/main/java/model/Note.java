@@ -3,15 +3,17 @@ package model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
+@Table(name = "note")
 public class Note {
 
     @Id
     @GeneratedValue
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "tagId")
+    @Column(name = "noteId")
     private Long noteId;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -19,5 +21,9 @@ public class Note {
     private Long notebookId;
 
     private String name;
+
+
+    @ManyToMany(mappedBy = "notes")
+    private Set<Tag> tagSet = new HashSet<>();
 
 }

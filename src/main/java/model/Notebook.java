@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "notebook")
 public class Notebook {
     @Id
     @GeneratedValue
@@ -20,6 +21,4 @@ public class Notebook {
     @ManyToOne
     @JoinColumn(name = "userId")
     private Long userId;
-
-    private List<Note> noteList = new ArrayList<>();
 }

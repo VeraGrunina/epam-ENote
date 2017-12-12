@@ -1,5 +1,6 @@
 package repositories;
 
+
 import model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,10 +30,11 @@ public class UserRepositoryTest {
         User userRead = userRepository.getOne(13L);
 
         User user = new User();
-        user.setUserId(13L);
+        user.setId(13L);
         user.setName("Vera");
-        user.setLogin("vera76532");
+        user.setEmail("vera76532");
         user.setPassword("testPassword");
+
 
         assertEquals(userRead, user);
     }
