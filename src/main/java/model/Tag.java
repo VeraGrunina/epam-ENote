@@ -12,9 +12,11 @@ import java.util.Set;
 @Table(name = "tag")
 public class Tag {
     @Id
-    @GeneratedValue
-    @Column(name = "tagId")
-    private Long tagId;
+//    @GeneratedValue
+//    @Column(name = "id")
+    private Long id;
+
+    private String name;
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -23,6 +25,11 @@ public class Tag {
             inverseJoinColumns = { @JoinColumn(name = "note_id") }
     )
     Set<Note> notes = new HashSet<>();
-
-    private String name;
 }
+
+//CREATE TABLE tag (
+//    id           BIGINT       AUTO_INCREMENT,
+//    name         VARCHAR(45)  NOT NULL,
+//
+//    CONSTRAINT tag_pk PRIMARY KEY (id)
+//);

@@ -10,6 +10,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
+
 import static org.junit.Assert.*;
 
 
@@ -25,6 +27,7 @@ public class UserRepositoryTest {
     public void getByNotebook() throws Exception {
 
     }
+
     @Test
     public void readTest() throws Exception {
         User userRead = userRepository.getOne(13L);
@@ -32,13 +35,11 @@ public class UserRepositoryTest {
         User user = new User();
         user.setId(13L);
         user.setName("Vera");
-        user.setEmail("vera76532");
+        user.setLogin("vera76532");
         user.setPassword("testPassword");
-
 
         assertEquals(userRead, user);
     }
-
 
 
 }
