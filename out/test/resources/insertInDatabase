@@ -1,4 +1,0 @@
-INSERT INTO user
-(id, name, login, password)
-VALUES
-(13L, 'Vera', 'vera76532', 'testPassword');
