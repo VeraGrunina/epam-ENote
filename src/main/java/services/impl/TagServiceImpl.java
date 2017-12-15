@@ -1,13 +1,14 @@
-package services;
+package services.impl;
 
 import model.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import repositories.TagRepository;
+import services.interfaces.TagService;
 
 import java.util.List;
 
 
-public class TagServiceImpl implements TagService{
+public class TagServiceImpl implements TagService {
     private final TagRepository tagRepository;
 
     @Autowired

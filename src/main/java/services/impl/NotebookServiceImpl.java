@@ -1,8 +1,9 @@
-package services;
+package services.impl;
 
 import model.Notebook;
 import org.springframework.beans.factory.annotation.Autowired;
 import repositories.NotebookRepository;
+import services.interfaces.NotebookService;
 
 import java.util.List;
 

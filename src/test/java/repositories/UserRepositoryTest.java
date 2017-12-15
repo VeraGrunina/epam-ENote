@@ -19,20 +19,36 @@ public class UserRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    public void getByNotebook() throws Exception {
-
-    }
-
-    @Test
     public void readTest() throws Exception {
-        User userRead = userRepository.getOne(13L);
+        User userRead = userRepository.getOne(1L);
 
         User user = new User();
-        user.setId(13L);
+        user.setId(1L);
         user.setName("Vera");
         user.setLogin("vera76532");
         user.setPassword("testPassword");
 
         assertEquals(userRead, user);
+    }
+
+    @Test
+    public void updateTest() throws Exception {
+        User user = userRepository.getOne(2L);
+
+        user.setName("name2_changed");
+        user.setLogin("login2_changed");
+        user.setPassword("password2_changed");
+        userRepository.saveAndFlush(user);
+
+        User actual = userRepository.getOne(2L);
+
+
+        User expected = new User();
+        expected.setId(2L);
+        expected.setName("name2_changed");
+        expected.setLogin("login2_changed");
+        expected.setPassword("password2_changed");
+
+        assertEquals(expected, actual);
     }
 }

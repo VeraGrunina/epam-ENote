@@ -1,8 +1,9 @@
-package services;
+package services.impl;
 
 import model.Note;
 import org.springframework.beans.factory.annotation.Autowired;
 import repositories.NoteRepository;
+import services.interfaces.NoteService;
 
 import java.util.List;
 
