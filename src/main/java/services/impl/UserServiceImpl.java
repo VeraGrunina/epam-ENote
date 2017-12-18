@@ -29,12 +29,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(User user) {
-        return userRepository.saveAndFlush(user);
+        return userRepository.save(user);
     }
 
     @Override
     public User readUserById(Long id) {
-        return userRepository.getOne(id);
+        return userRepository.findOne(id);
     }
 
     @Override
