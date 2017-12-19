@@ -2,10 +2,13 @@ package model;
 
 import lombok.Data;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,28 +17,17 @@ import java.util.Set;
 public class Notebook {
 
     @Id
-//    @GeneratedValue
-//    @Column(name = "id")
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "id")
     private Long id;
 
     private String name;
 
-//    @Column(name = "user_id")
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
 
     @OneToMany(mappedBy = "notebook")
     private Set<Note> noteSet = new HashSet<>();
 }
-
-
 
 //CREATE TABLE notebook (
 //    id           BIGINT       AUTO_INCREMENT,
