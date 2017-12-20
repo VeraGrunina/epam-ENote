@@ -8,6 +8,6 @@ public interface TagService {
     Tag createTag(Tag tag);
     Tag updateTag(Tag tag);
     Tag readTagById(Long id);
-    void deleteTag(Tag id);
+    void deleteTag(Long id);
     List<Tag> list();
 }

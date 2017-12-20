@@ -23,7 +23,7 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public Note updateNote(Note note) {
-        return noteRepository.saveAndFlush(note);
+        return noteRepository.save(note);
     }
 
     @Override

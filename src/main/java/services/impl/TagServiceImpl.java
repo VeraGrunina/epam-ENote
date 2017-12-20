@@ -23,7 +23,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Tag updateTag(Tag tag) {
-        return tagRepository.saveAndFlush(tag);
+        return tagRepository.save(tag);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void deleteTag(Tag id) {
+    public void deleteTag(Long id) {
         tagRepository.delete(id);
     }
 
