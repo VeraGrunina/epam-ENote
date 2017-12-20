@@ -1,45 +1,35 @@
 package model;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
 @Entity
-//@RequiredArgsConstructor
 @NoArgsConstructor
-//@Table(name = "user")
 public class User {
 
-    // GenerationType.IDENTITY - означает AutoIncrement
-
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id")
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "id")
-//    @NonNull
     private Long id;
 
-//    @Column(name = "userName")
-//    @NonNull
     private String name;
 
-//    @Column(name = "login")
-//    @NonNull
     private String login;
 
-//    @NonNull
     private String password;
 
     @OneToMany(mappedBy = "user")
     private Set<Notebook> notebookSet = new HashSet<>();
-}
 
+    @OneToOne(mappedBy = "user")
+    private Hash hash;
+}
 
 //CREATE TABLE user (
 //    id           BIGINT       AUTO_INCREMENT,

@@ -1,7 +1,7 @@
 package repositories;
 
-import model.Tag;
+import model.Hash;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TagRepository extends JpaRepository<Tag, Long> {
+public interface HashRepository extends JpaRepository<Hash, Long> {
 }

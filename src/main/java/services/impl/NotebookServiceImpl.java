@@ -22,7 +22,7 @@ public class NotebookServiceImpl implements NotebookService {
 
     @Override
     public Notebook updateNotebook(Notebook note) {
-        return notebookRepository.saveAndFlush(note);
+        return notebookRepository.save(note);
     }
 
     @Override

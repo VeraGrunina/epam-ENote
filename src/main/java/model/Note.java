@@ -2,7 +2,12 @@ package model;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,20 +17,12 @@ import java.util.Set;
 public class Note {
 
     @Id
-//    @GeneratedValue
     private Long id;
-
-//    private Long notebook_id;
-
-    //    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "notebook_id")
     private String name;
-
     private String text;
 
-
     @ManyToOne
-    @JoinColumn(name="notebook_id", nullable=false)
+    @JoinColumn(name = "notebook_id", nullable = false)
     private Notebook notebook;
 
     @ManyToMany(mappedBy = "notes")
