@@ -16,8 +16,7 @@ public class NotebookServiceImpl implements NotebookService {
     }
 
     @Override
-    public Notebook createNotebook(Notebook note, Long userId) {
-        note.setUserId(userId);
+    public Notebook createNotebook(Notebook note) {
         return notebookRepository.save(note);
     }
 

@@ -27,7 +27,7 @@ public class NotebookController {
   @PostMapping("/notebook")
   @ResponseStatus(HttpStatus.CREATED)
   public void create(@RequestBody Notebook notebook, @PathVariable("userId") Long userId) {
-    notebook = notebookService.createNotebook(notebook, userId);
+    notebook = notebookService.createNotebook(notebook);
 
     String url = "/" + notebook.getId();
 
@@ -37,7 +37,7 @@ public class NotebookController {
   @PutMapping("/notebook/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void update(@PathVariable Long id, @RequestBody Notebook notebook) {
-    notebookService.updateNotebook(id, notebook);
+    notebookService.updateNotebook(notebook);
   }
 
   @GetMapping("notebook/{id}")
