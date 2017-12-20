@@ -26,7 +26,7 @@ public class NoteServiceImpl implements NoteService {
         Notebook notebook = notebookService.readNotebookById(notebookId);
         note.setNotebook(notebook);
         notebook.addNote(note);
-        notebookService.updateNotebook(notebook);
+        notebookService.updateNotebook(notebook, notebookId);
 
         return noteRepository.save(note);
     }
@@ -51,6 +51,9 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public void deleteNote(Long id) {
+        if (!noteRepository.exists(id)) {
+            throw new ApplicationRuntimeException("Note with id: " + id + " doesn't exist");
+        }
         noteRepository.delete(id);
     }
 

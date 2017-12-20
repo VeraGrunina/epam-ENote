@@ -31,18 +31,24 @@ public class NoteController {
 
     @PutMapping("/note/{noteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Long noteId, @RequestBody Note note) {
+    public void updateNote(@PathVariable Long noteId, @RequestBody Note note) {
         noteService.updateNote(note, noteId);
     }
 
     @GetMapping("/note/{noteId}")
-    public Note findById(@PathVariable Long noteId) {
+    public Note findNoteById(@PathVariable Long noteId) {
         return noteService.readNoteById(noteId);
     }
 
     @GetMapping("/notes")
-    public List<Note> findAll() {
+    public List<Note> findAllNotes() {
         return noteService.list();
+    }
+
+    @DeleteMapping("/note/{noteId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeNoteFromNotebook(@PathVariable Long noteId) {
+        noteService.deleteNote(noteId);
     }
 
 

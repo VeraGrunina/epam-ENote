@@ -29,6 +29,10 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Hash hash;
+
+    public void addNotebook(Notebook notebook) {
+        notebookSet.add(notebook);
+    }
 }
 
 //CREATE TABLE user (

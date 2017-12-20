@@ -49,6 +49,7 @@ public class NoteServiceTest {
 
   @Test
   public void deleteNote() throws Exception {
+    when(noteRepositoryMock.exists(7L)).thenReturn(true);
     noteServiceImplMock.deleteNote(7L);
     verify(noteRepositoryMock).delete(7L);
   }
