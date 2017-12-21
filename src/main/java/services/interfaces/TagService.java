@@ -5,9 +5,9 @@ import model.Tag;
 import java.util.List;
 
 public interface TagService {
-    Tag createTag(Tag tag);
-    Tag updateTag(Tag tag);
+    Tag createTag(Tag tag, Long userId);
+    Tag updateTag(Tag tag, Long tagId);
     Tag readTagById(Long id);
     void deleteTag(Long id);
-    List<Tag> list();
+    List<Tag> list(Long userId);
 }
