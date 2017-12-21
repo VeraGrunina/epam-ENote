@@ -12,6 +12,7 @@ import repositories.NoteRepository;
 import services.impl.NoteServiceImpl;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class NoteServiceTest {
@@ -27,24 +28,28 @@ public class NoteServiceTest {
 
   @Test
   public void createNote() throws Exception {
-    noteServiceImplMock.createNote(noteMock);
+
+    noteServiceImplMock.createNote(noteMock, 15L);
     verify(noteRepositoryMock).save(noteMock);
   }
 
   @Test
   public void updateNote() throws Exception {
-    noteServiceImplMock.updateNote(noteMock);
+    when(noteMock.getId()).thenReturn(13L);
+    noteServiceImplMock.updateNote(noteMock, 13L);
     verify(noteRepositoryMock).save(noteMock);
   }
 
   @Test
   public void readNoteById() throws Exception {
+    when(noteRepositoryMock.exists(4L)).thenReturn(true);
     noteServiceImplMock.readNoteById(4L);
     verify(noteRepositoryMock).getOne(4L);
   }
 
   @Test
   public void deleteNote() throws Exception {
+    when(noteRepositoryMock.exists(7L)).thenReturn(true);
     noteServiceImplMock.deleteNote(7L);
     verify(noteRepositoryMock).delete(7L);
   }

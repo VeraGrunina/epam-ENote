@@ -21,12 +21,20 @@ public class Notebook {
 
     private String name;
 
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private Long userId;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "notebook")
     private Set<Note> noteSet = new HashSet<>();
+
+    public void addNote(Note note) {
+        noteSet.add(note);
+    }
 }
 
 //CREATE TABLE notebook (

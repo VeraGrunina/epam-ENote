@@ -1,7 +1,5 @@
 package services.interfaces;
 
-import static org.junit.Assert.*;
-
 import model.Tag;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,7 +49,7 @@ public class TagServiceTest {
 
   @Test
   public void list() throws Exception {
-    tagServiceImplMock.list();
+    tagServiceImplMock.set();
     verify(tagRepositoryMock).findAll();
   }
 

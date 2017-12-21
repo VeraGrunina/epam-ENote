@@ -3,11 +3,12 @@ package services.interfaces;
 import model.Notebook;
 
 import java.util.List;
+import java.util.Set;
 
 public interface NotebookService {
-    Notebook createNotebook(Notebook note, Long userId);
-    Notebook updateNotebook(Long id, Notebook note);
+    Notebook createNotebook(Notebook notebook, Long userId);
+    Notebook updateNotebook(Notebook notebook, Long notebookId);
     Notebook readNotebookById(Long id);
     void deleteNotebook(Long id);
-    List<Notebook> list();
+    Set<Notebook> list(Long userId);
 }

@@ -1,33 +1,32 @@
 package web.controller;
 
+import model.Note;
 import model.Notebook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import services.interfaces.NotebookService;
 
+import java.util.List;
+import java.util.Set;
+import web.utils.AuthService;
+
 @RestController
-@RequestMapping("/user/{userId}")
 public class NotebookController {
 
   private final NotebookService notebookService;
+  private final AuthService authService;
 
   @Autowired
-  public NotebookController(NotebookService notebookService) {
+  public NotebookController(NotebookService notebookService, AuthService authService) {
     this.notebookService = notebookService;
+    this.authService = authService;
   }
 
   @PostMapping("/notebook")
   @ResponseStatus(HttpStatus.CREATED)
-  public void create(@RequestBody Notebook notebook, @PathVariable("userId") Long userId) {
-    notebook = notebookService.createNotebook(notebook, userId);
+  public void createNotebook(@RequestBody Notebook notebook) {
+    notebook = notebookService.createNotebook(notebook, authService.getCurrentUserId());
 
     String url = "/" + notebook.getId();
 
@@ -36,13 +35,24 @@ public class NotebookController {
 
   @PutMapping("/notebook/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void update(@PathVariable Long id, @RequestBody Notebook notebook) {
-    notebookService.updateNotebook(id, notebook);
+  public void updateNotebook(@RequestBody Notebook notebook, @PathVariable Long id) {
+    notebookService.updateNotebook(notebook, id);
   }
 
-  @GetMapping("notebook/{id}")
-  public Notebook findById(@PathVariable Long id) {
+  @GetMapping("/notebook/{id}")
+  public Notebook findNotebookById(@PathVariable Long id) {
     return notebookService.readNotebookById(id);
+  }
+
+  @GetMapping("/notebooks")
+  public Set<Notebook> findAllNotebooks() {
+    return notebookService.list(authService.getCurrentUserId());
+  }
+
+  @DeleteMapping("/notebook/{notebookId}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void removeNotebookFromUser(@PathVariable Long notebookId) {
+    notebookService.deleteNotebook(notebookId);
   }
 
 }

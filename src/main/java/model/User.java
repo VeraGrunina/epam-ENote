@@ -29,6 +29,17 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Hash hash;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Tag> tags = new HashSet<>();
+
+    public void addNotebook(Notebook notebook) {
+        notebookSet.add(notebook);
+    }
+
+    public void addTag(Tag tag) {
+        tags.add(tag);
+    }
 }
 
 //CREATE TABLE user (

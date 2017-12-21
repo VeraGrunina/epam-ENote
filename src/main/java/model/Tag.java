@@ -1,5 +1,6 @@
 package model;
 
+import javax.persistence.ManyToOne;
 import lombok.Data;
 
 import javax.persistence.CascadeType;
@@ -29,6 +30,10 @@ public class Tag {
             inverseJoinColumns = {@JoinColumn(name = "note_id")}
     )
     Set<Note> notes = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }
 
 //CREATE TABLE tag (
