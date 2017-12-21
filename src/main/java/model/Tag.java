@@ -21,6 +21,10 @@ public class Tag {
     @Id
     private Long id;
 
+    public Long getId() {
+        return id;
+    }
+
     private String name;
 
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -34,6 +38,22 @@ public class Tag {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNotes(Set<Note> notes) {
+        this.notes = notes;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
 
 //CREATE TABLE tag (

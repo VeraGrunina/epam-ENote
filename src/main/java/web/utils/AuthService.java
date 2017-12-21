@@ -4,6 +4,7 @@ import lombok.Data;
 import model.Hash;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import services.interfaces.HashService;
 import services.interfaces.UserService;
 
@@ -19,6 +20,38 @@ public class AuthService {
     private HashService hashService;
 
     private Long currentUserId;
+
+    public static int getWorkload() {
+        return workload;
+    }
+
+    public static void setWorkload(int workload) {
+        AuthService.workload = workload;
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public HashService getHashService() {
+        return hashService;
+    }
+
+    public void setHashService(HashService hashService) {
+        this.hashService = hashService;
+    }
+
+    public Long getCurrentUserId() {
+        return currentUserId;
+    }
+
+    public void setCurrentUserId(Long currentUserId) {
+        this.currentUserId = currentUserId;
+    }
 
     public static String hashPassword(String password_plaintext) {
         String salt = BCrypt.gensalt(workload);

@@ -22,11 +22,16 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
+import repositories.HashRepository;
+import services.impl.HashServiceImpl;
 
 @Configuration
 @PropertySource("database.properties")
-@EnableJpaRepositories("repositories")
-@ComponentScan(basePackages = "model")
+@EnableJpaRepositories(basePackageClasses = HashRepository.class)
+@ComponentScan(basePackageClasses = {
+    HashRepository.class,
+    HashServiceImpl.class
+})
 public class AppConfig {
 
     @Bean
@@ -35,6 +40,7 @@ public class AppConfig {
                 .setName("realDatabase")
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("classpath:src/java/resources/init.sql")
+                .addScript("insertInDataBase.sql")
                 .build();
     }
 
@@ -63,14 +69,14 @@ public class AppConfig {
         return new JpaTransactionManager(emf);
     }
 
-    @Bean(name = "sessionFactory")
-    public SessionFactory sessionFactory() throws IOException, SQLException {
-        LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
-        sessionFactoryBean.setDataSource(h2dataSource());
-        sessionFactoryBean.setPackagesToScan("model");
-        sessionFactoryBean.setAnnotatedPackages("model");
-        sessionFactoryBean.afterPropertiesSet();
-        return sessionFactoryBean.getObject();
-    }
+//    @Bean(name = "sessionFactory")
+//    public SessionFactory sessionFactory() throws IOException, SQLException {
+//        LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
+//        sessionFactoryBean.setDataSource(h2dataSource());
+//        sessionFactoryBean.setPackagesToScan("model");
+//        sessionFactoryBean.setAnnotatedPackages("model");
+//        sessionFactoryBean.afterPropertiesSet();
+//        return sessionFactoryBean.getObject();
+//    }
 
 }

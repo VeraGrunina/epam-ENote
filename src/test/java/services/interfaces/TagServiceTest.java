@@ -25,13 +25,13 @@ public class TagServiceTest {
 
   @Test
   public void createTag() throws Exception {
-    tagServiceImplMock.createTag(tagMock);
+    tagServiceImplMock.createTag(tagMock, 1L);
     verify(tagRepositoryMock).save(tagMock);
   }
 
   @Test
   public void updateTag() throws Exception {
-    tagServiceImplMock.updateTag(tagMock);
+    tagServiceImplMock.updateTag(tagMock, 1L);
     verify(tagRepositoryMock).save(tagMock);
   }
 
@@ -49,7 +49,7 @@ public class TagServiceTest {
 
   @Test
   public void list() throws Exception {
-    tagServiceImplMock.set();
+    tagServiceImplMock.set(null);
     verify(tagRepositoryMock).findAll();
   }
 

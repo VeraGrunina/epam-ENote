@@ -27,6 +27,22 @@ public class Note {
 
     @ManyToMany(mappedBy = "notes")
     private Set<Tag> tags = new HashSet<>();
+
+    public Notebook getNotebook() {
+        return notebook;
+    }
+
+    public void setNotebook(Notebook notebook) {
+        this.notebook = notebook;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
 
 //CREATE TABLE note (

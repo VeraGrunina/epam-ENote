@@ -1,0 +1,10 @@
+INSERT INTO user
+(id, name, login, password)
+VALUES
+(1L, 'Vera', 'vera76532', 'testPassword'),
+(2L, 'name2', 'login2', 'password2');
+
+INSERT INTO notebook
+(id, name, user_id)
+VALUES
+  (1L, 'FirstNotebook', 2L);

@@ -1,6 +1,7 @@
 package web.controller;
 
 import java.util.List;
+import java.util.Set;
 import model.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class TagController {
     }
 
     @GetMapping("/tags")
-    public List<Tag> findAllTags() {
+    public Set<Tag> findAllTags() {
         return tagService.set(authService.getCurrentUserId());
     }
 

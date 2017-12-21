@@ -35,6 +35,38 @@ public class Notebook {
     public void addNote(Note note) {
         noteSet.add(note);
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Note> getNoteSet() {
+        return noteSet;
+    }
+
+    public void setNoteSet(Set<Note> noteSet) {
+        this.noteSet = noteSet;
+    }
 }
 
 //CREATE TABLE notebook (

@@ -26,7 +26,7 @@ public class UserController {
 
     @PutMapping("/user/{userId}")
     public User updateUser(@PathVariable User user) {
-        user.setId(authService.getCurrentUserId());
+        //user.setId(authService.getCurrentUserId());
         return userService.updateUser(user);
     }
 
