@@ -10,6 +10,11 @@ repositories {
 }
 
 dependencies {
+    def tomcatVersion = '9.0.1'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+
     //compile 'mysql:mysql-connector-java'
     compile group: 'com.h2database', name: 'h2', version: '1.4.196'
     // https://mvnrepository.com/artifact/org.mindrot/jbcrypt
@@ -40,7 +45,6 @@ dependencies {
     // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.0'
 
-
     //compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
     //compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
 
@@ -50,5 +54,9 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.196'
     testCompile group: 'org.springframework', name: 'spring-test', version: '4.3.12.RELEASE'
+}
 
+tomcat {
+    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
 }
