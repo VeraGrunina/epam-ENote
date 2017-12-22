@@ -1,6 +1,6 @@
 //package repositories;
 //
-//import model.User;
+//import model.UserWebModel;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +20,9 @@
 //
 //    @Test
 //    public void readTest() throws Exception {
-//        User userRead = userRepository.getOne(1L);
+//        UserWebModel userRead = userRepository.getOne(1L);
 //
-//        User user = new User();
+//        UserWebModel user = new UserWebModel();
 //        user.setId(1L);
 //        user.setName("Vera");
 //        user.setLogin("vera76532");
@@ -33,17 +33,17 @@
 //
 //    @Test
 //    public void updateTest() throws Exception {
-//        User user = userRepository.getOne(2L);
+//        UserWebModel user = userRepository.getOne(2L);
 //
 //        user.setName("name2_changed");
 //        user.setLogin("login2_changed");
 //        user.setPassword("password2_changed");
 //        userRepository.saveAndFlush(user);
 //
-//        User actual = userRepository.getOne(2L);
+//        UserWebModel actual = userRepository.getOne(2L);
 //
 //
-//        User expected = new User();
+//        UserWebModel expected = new UserWebModel();
 //        expected.setId(2L);
 //        expected.setName("name2_changed");
 //        expected.setLogin("login2_changed");

@@ -1,4 +1,4 @@
-INSERT INTO user
+INSERT INTO userWebModel
 (id, name, login, password)
 VALUES
 (1L, 'Vera', 'vera76532', 'testPassword'),

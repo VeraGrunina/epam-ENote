@@ -41,3 +41,11 @@ CREATE TABLE tag_note (
   CONSTRAINT tag_note__tag_id_fk FOREIGN KEY (tag_id) REFERENCES tag (id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT tag_note__note_id_fk FOREIGN KEY (note_id) REFERENCES note (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE hash (
+    user_id      BIGINT       NOT NULL,
+    hash         VARCHAR(60)  NOT NULL,
+
+    CONSTRAINT hash__user_id_fk FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
