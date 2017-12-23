@@ -59,7 +59,7 @@ public class UserController {
 
         if (currentUserId != null) {
             User user = userService.readUserById(currentUserId);
-            userService.deleteUser(user);
+            userService.deleteUser(currentUserId);
         }
 
         return; // redirect:/400

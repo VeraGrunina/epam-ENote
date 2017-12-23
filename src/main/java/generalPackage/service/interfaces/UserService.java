@@ -13,9 +13,5 @@ public interface UserService {
 
     User readUserByLogin(String login);
 
-    void deleteUser(User user);
-
-    boolean exists(String login);
-
-    boolean exists(Long id);
+    void deleteUser(Long id);
 }

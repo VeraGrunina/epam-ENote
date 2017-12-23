@@ -1,8 +1,9 @@
 package services;
 
-import generalPackage.data.entity.UserWebModel;
 import generalPackage.data.dao.UserDAO;
+import generalPackage.data.entity.User;
 import generalPackage.service.impl.UserServiceImpl;
+import generalPackage.web.model.UserWebModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -19,10 +20,13 @@ public class UserServiceTest {
     private UserServiceImpl userServiceImplMock;
 
     @Mock
+    private User userMock;
+
+    @Mock
     private UserDAO userDAOMock;
 
     @Mock
-    private UserWebModel userMock;
+    private UserWebModel userWebModelMock;
 
     @Test
     public void createUser() throws Exception {

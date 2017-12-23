@@ -23,16 +23,11 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public Note createNote(Note note) {
-        Notebook notebook = notebookService.readNotebookById(notebookId);
-        note.setNotebook(notebook);
-        notebook.addNote(note);
-        notebookService.updateNotebook(notebook, notebookId);
-
         return noteDAO.save(note);
     }
 
     @Override
-    public Note updateNote(Note note) {
+    public Note updateNote(Note note, Long noteId) {
         if (note.getId().equals(noteId)) {
             return noteDAO.save(note);
         } else {
@@ -50,15 +45,10 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public void deleteNote(Long id) {
-        if (!noteDAO.exists(id)) {
-            throw new ApplicationRuntimeException("Note with id: " + id + " doesn't exist");
+    public void deleteNote(Note note) {
+        if (!noteDAO.exists(note.getId())) {
+            throw new ApplicationRuntimeException("Note with id: " + note.getId() + " doesn't exist");
         }
-        noteDAO.delete(id);
-    }
-
-    @Override
-    public List<Note> list() {
-        return noteDAO.findAll();
+        noteDAO.delete(note);
     }
 }

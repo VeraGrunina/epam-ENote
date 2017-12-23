@@ -52,6 +52,11 @@ public class AuthServiceImpl implements AuthService {
         setCurrentUserId(userId);
         return true;
     }
+
+    @Override
+    public boolean register(Long userId, String password) {
+        return false;
+    }
 }
 
 

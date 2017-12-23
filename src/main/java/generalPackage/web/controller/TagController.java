@@ -67,14 +67,9 @@ public class TagController {
 
         User user = userService.readUserById(currentUserId);
         Tag tag = tagTransformer.bind(tagWebModel);
-
-        if (!tag.getId().equals(tagId)) {
-            throw new ApplicationRuntimeException("You can't change tag id");
-        }
-
         tag.setUser(user);
 
-        tagService.updateTag(tag);
+        tagService.updateTag(tag, tagId);
     }
 
     @GetMapping("/tag/{id}")

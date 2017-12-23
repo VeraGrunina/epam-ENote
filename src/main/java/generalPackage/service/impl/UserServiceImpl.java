@@ -61,8 +61,5 @@ public class UserServiceImpl implements UserService {
         userDAO.delete(id);
     }
 
-    @Override
-    public boolean exists(String login) {
-        return userDAO.exists(login);
-    }
+
 }

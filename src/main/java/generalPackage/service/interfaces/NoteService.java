@@ -8,7 +8,7 @@ public interface NoteService {
 
     Note readNoteById(Long id);
 
-    Note updateNote(Note note);
+    Note updateNote(Note note, Long noteId);
 
     void deleteNote(Note note);
 }

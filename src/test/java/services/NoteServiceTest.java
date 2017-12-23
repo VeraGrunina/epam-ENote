@@ -1,6 +1,7 @@
 package services;
 
-import generalPackage.data.entity.NoteWebModel;
+import generalPackage.data.entity.Note;
+import generalPackage.web.model.NoteWebModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -19,10 +20,13 @@ public class NoteServiceTest {
   private NoteServiceImpl noteServiceImplMock;
 
   @Mock
+  private Note noteMock;
+
+  @Mock
   private NoteDAO noteDAOMock;
 
   @Mock
-  private NoteWebModel noteMock;
+  private NoteWebModel noteWebModelMock;
 
   @Test
   public void createNote() throws Exception {
@@ -34,7 +38,7 @@ public class NoteServiceTest {
   @Test
   public void updateNote() throws Exception {
     when(noteMock.getId()).thenReturn(13L);
-    noteServiceImplMock.updateNote(noteMock);
+    noteServiceImplMock.updateNote(noteMock, 13L);
     verify(noteDAOMock).save(noteMock);
   }
 
@@ -48,14 +52,8 @@ public class NoteServiceTest {
   @Test
   public void deleteNote() throws Exception {
     when(noteDAOMock.exists(7L)).thenReturn(true);
-    noteServiceImplMock.deleteNote(7L);
-    verify(noteDAOMock).delete(7L);
-  }
-
-  @Test
-  public void list() throws Exception {
-    noteServiceImplMock.list();
-    verify(noteDAOMock).findAll();
+    noteServiceImplMock.deleteNote(noteMock);
+    verify(noteDAOMock).delete(noteMock);
   }
 
 }

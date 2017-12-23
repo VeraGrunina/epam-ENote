@@ -48,11 +48,7 @@ public class NoteController {
     public void updateNote(@PathVariable("noteId") Long noteId, @RequestBody NoteWebModel noteWebModel) {
         Note note = noteTransformer.bind(noteWebModel);
 
-        if (!note.getId().equals(noteId)) {
-            throw new ApplicationRuntimeException("You can't change id");
-        }
-
-        noteService.updateNote(note);
+        noteService.updateNote(note, noteId);
     }
 
     @GetMapping("/note/{noteId}")

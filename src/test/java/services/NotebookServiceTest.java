@@ -1,8 +1,10 @@
 package services;
 
-import generalPackage.data.entity.NotebookWebModel;
 import generalPackage.data.dao.NotebookDAO;
+import generalPackage.data.entity.Notebook;
+import generalPackage.data.entity.User;
 import generalPackage.service.impl.NotebookServiceImpl;
+import generalPackage.web.model.NotebookWebModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -19,21 +21,27 @@ public class NotebookServiceTest {
     private NotebookServiceImpl notebookServiceImplMock;
 
     @Mock
+    private Notebook notebookMock;
+
+    @Mock
+    private User userMock;
+
+    @Mock
     private NotebookDAO notebookDAOMock;
 
     @Mock
-    private NotebookWebModel notebookMock;
+    private NotebookWebModel notebookWebModelMock;
 
     @Test
     public void createNotebook() throws Exception {
-        notebookServiceImplMock.createNotebook(notebookMock, 10L);
+        notebookServiceImplMock.createNotebook(notebookMock);
         verify(notebookDAOMock).save(notebookMock);
     }
 
     @Test
     public void updateNotebook() throws Exception {
         when(notebookMock.getId()).thenReturn(2L);
-        notebookServiceImplMock.updateNotebook(notebookMock, 2L);
+        notebookServiceImplMock.updateNotebook(notebookMock);
         verify(notebookDAOMock).save(notebookMock);
     }
 
@@ -46,14 +54,13 @@ public class NotebookServiceTest {
 
     @Test
     public void deleteNotebook() throws Exception {
-        when(notebookDAOMock.exists(9L)).thenReturn(true);
-        notebookServiceImplMock.deleteNotebook(9L);
-        verify(notebookDAOMock).delete(9L);
+        notebookServiceImplMock.deleteNotebook(notebookMock);
+        verify(notebookDAOMock).delete(notebookMock);
     }
 
     @Test
     public void list() throws Exception {
-        notebookServiceImplMock.list(8L);
+        notebookServiceImplMock.list(userMock);
         verify(notebookDAOMock).findAll();
     }
 }

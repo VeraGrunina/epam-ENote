@@ -8,7 +8,7 @@ public interface TagService {
 
     Tag readTagById(Long id);
 
-    Tag updateTag(Tag tag);
+    Tag updateTag(Tag tag, Long tagId);
 
     void deleteTag(Tag tag);
 }
