@@ -18,15 +18,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/notebook/{notebookId}")
 public class NoteController {
+
     @Autowired
     private NoteService noteService;
-
     @Autowired
     private NotebookService notebookService;
-
     @Autowired
     private NoteTransformer noteTransformer;
-
     @Autowired
     private NotebookTransformer notebookTransformer;
 
@@ -58,8 +56,14 @@ public class NoteController {
     }
 
     @GetMapping("/note/{noteId}")
-    public NoteWebModel findNoteById(@PathVariable("noteId") Long noteId) {
+    public NoteWebModel findNoteById(@PathVariable("noteId") Long noteId,
+                                     @PathVariable("notebookId") Long notebookId) {
+
         Note note = noteService.readNoteById(noteId);
+
+        if (!note.getNotebook().getId().equals(notebookId)) {
+            throw new ApplicationRuntimeException("This notebook hasn't got this note with this id");
+        }
 
         return noteTransformer.unbind(note);
     }
@@ -73,8 +77,14 @@ public class NoteController {
 
     @DeleteMapping("/note/{noteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeNoteFromNotebook(@PathVariable Long noteId) {
+    public void removeNoteFromNotebook(@PathVariable Long noteId,
+                                       @PathVariable("notebookId") Long notebookId) {
         Note note = noteService.readNoteById(noteId);
+
+        if (!note.getNotebook().getId().equals(notebookId)) {
+            throw new ApplicationRuntimeException("You can't delete this note, because this note in another notebook");
+        }
+
         noteService.deleteNote(note);
     }
 
