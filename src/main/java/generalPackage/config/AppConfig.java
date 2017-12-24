@@ -1,8 +1,13 @@
-package repositories;
+package generalPackage.config;
 
+import generalPackage.data.dao.HashDAO;
+import generalPackage.service.impl.HashServiceImpl;
+import generalPackage.service.interfaces.AuthService;
+import generalPackage.service.interfaces.HashService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
@@ -15,21 +20,34 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.sql.SQLException;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @PropertySource("database.properties")
-@EnableJpaRepositories("repositories")
-@ComponentScan(basePackages = "model")
-public class TestConfig {
+@EnableJpaRepositories(basePackageClasses = HashDAO.class)
+@ComponentScan(basePackageClasses = {
+        HashService.class,
+})
+
+//@Configuration
+//@PropertySource("database.properties")
+//@EnableJpaRepositories(basePackageClasses = HashDAO.class)
+//@ComponentScan(basePackageClasses = {
+//    HashDAO.class,
+//    HashServiceImpl.class,
+//    AuthService.class
+//})
+//@EnableTransactionManagement
+//@EnableAspectJAutoProxy
+public class AppConfig {
 
     @Bean
-    public DataSource h2dataSource() throws SQLException {
+    public DataSource h2dataSource() {
         return new EmbeddedDatabaseBuilder()
-                .setName("testDatabase")
+                .setName("realDatabase")
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("init.sql")
-                .addScript("insertInDatabase")
+                .addScript("insert.sql")
                 .build();
     }
 
@@ -43,12 +61,8 @@ public class TestConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        try {
-            em.setDataSource(h2dataSource());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        em.setPackagesToScan("model");
+        em.setDataSource(h2dataSource());
+        em.setPackagesToScan("generalPackage.data.entity");
         em.setJpaVendorAdapter(jpaVendorAdapter());
         return em;
     }
