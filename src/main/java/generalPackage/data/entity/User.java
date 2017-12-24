@@ -14,7 +14,7 @@ import java.util.Set;
 public class User {
 
     @Id
-    private Long id;
+    private Integer id;
 
     private String name;
 
@@ -24,14 +24,14 @@ public class User {
     private Set<Notebook> notebooks = new HashSet<>();
 
     @OneToOne(mappedBy = "user")
-    Hash hash;
+    Credit credit;
 
     @OneToMany(mappedBy = "user")
     private Set<Tag> tags = new HashSet<>();
 }
 
 //CREATE TABLE user (
-//    id           BIGINT       AUTO_INCREMENT,
+//    id           INT          AUTO_INCREMENT,
 //    name         VARCHAR(45)  NOT NULL,
 //    login        VARCHAR(45)  NOT NULL,
 //    password     VARCHAR(45)  NOT NULL,

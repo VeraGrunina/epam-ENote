@@ -1,11 +1,14 @@
 package generalPackage.service.interfaces;
 
+import generalPackage.data.entity.User;
+
 public interface AuthService {
 
-    Long getCurrentUserId();
+    Integer getCurrentUserId();
 
-    void setCurrentUserId(Long currentUserId);
+    void setCurrentUserId(Integer currentUserId);
 
-    boolean login(Long userId, String password);
-    boolean register(Long userId, String password);
+    boolean check(User user, String password);
+
+    void saveUserPassword(User user, String password);
 }

@@ -30,10 +30,10 @@ public class UserController {
     @GetMapping("/user}")
 
     public UserWebModel getUser() {
-        Long currentUserId = authService.getCurrentUserId();
+        Integer currentUserId = authService.getCurrentUserId();
 
         if (currentUserId == null) {
-            return null; // redirect:/login
+            return null; // redirect:/check
         }
 
         User user = userService.readUserById(currentUserId);
@@ -42,10 +42,10 @@ public class UserController {
 
     @PutMapping("/user")
     public void updateUser(@RequestBody UserWebModel userWebModel) {
-        Long currentUserId = authService.getCurrentUserId();
+        Integer currentUserId = authService.getCurrentUserId();
 
         if (currentUserId == null) {
-            return; // redirect:/login
+            return; // redirect:/check
         }
 
         User user = userTransformer.bind(userWebModel);
@@ -55,11 +55,11 @@ public class UserController {
 
     @DeleteMapping("/user}")
     public void deleteUser() {
-        Long currentUserId = authService.getCurrentUserId();
+        Integer currentUserId = authService.getCurrentUserId();
 
         if (currentUserId != null) {
             User user = userService.readUserById(currentUserId);
-            userService.deleteUser(user);
+            userService.deleteUser(currentUserId);
         }
 
         return; // redirect:/400

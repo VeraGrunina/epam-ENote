@@ -1,8 +1,9 @@
 package services;
 
-import generalPackage.data.entity.UserWebModel;
 import generalPackage.data.dao.UserDAO;
+import generalPackage.data.entity.User;
 import generalPackage.service.impl.UserServiceImpl;
+import generalPackage.web.model.UserWebModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -19,10 +20,13 @@ public class UserServiceTest {
     private UserServiceImpl userServiceImplMock;
 
     @Mock
+    private User userMock;
+
+    @Mock
     private UserDAO userDAOMock;
 
     @Mock
-    private UserWebModel userMock;
+    private UserWebModel userWebModelMock;
 
     @Test
     public void createUser() throws Exception {
@@ -38,14 +42,14 @@ public class UserServiceTest {
 
     @Test
     public void readUserById() throws Exception {
-        when(userDAOMock.exists(13L)).thenReturn(true);
-        userServiceImplMock.readUserById(13L);
-        verify(userDAOMock).findOne(13L);
+        when(userDAOMock.exists(13)).thenReturn(true);
+        userServiceImplMock.readUserById(13);
+        verify(userDAOMock).findOne(13);
     }
 
     @Test
     public void deleteUser() throws Exception {
-        userServiceImplMock.deleteUser(15L);
-        verify(userDAOMock).delete(15L);
+        userServiceImplMock.deleteUser(15);
+        verify(userDAOMock).delete(15);
     }
 }

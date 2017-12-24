@@ -6,9 +6,9 @@ public interface TagService {
 
     Tag createTag(Tag tag);
 
-    Tag readTagById(Long id);
+    Tag readTagById(Integer id);
 
-    Tag updateTag(Tag tag);
+    Tag updateTag(Tag tag, Integer tagId);
 
     void deleteTag(Tag tag);
 }

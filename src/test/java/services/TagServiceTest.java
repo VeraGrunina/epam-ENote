@@ -1,8 +1,9 @@
 package services;
 
-import generalPackage.data.entity.TagWebModel;
 import generalPackage.data.dao.TagDAO;
+import generalPackage.data.entity.Tag;
 import generalPackage.service.impl.TagServiceImpl;
+import generalPackage.web.model.TagWebModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -10,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TagServiceTest {
@@ -18,39 +20,40 @@ public class TagServiceTest {
     private TagServiceImpl tagServiceImplMock;
 
     @Mock
+    private Tag tagMock;
+
+    @Mock
     private TagDAO tagDAOMock;
 
     @Mock
-    private TagWebModel tagMock;
+    private TagWebModel tagWebModelMock;
 
     @Test
     public void createTag() throws Exception {
-        tagServiceImplMock.createTag(tagMock, 1L);
+        tagServiceImplMock.createTag(tagMock);
         verify(tagDAOMock).save(tagMock);
     }
 
     @Test
     public void updateTag() throws Exception {
-        tagServiceImplMock.updateTag(tagMock, 1L);
+        when(tagMock.getId()).thenReturn(1);
+        tagServiceImplMock.updateTag(tagMock, 1);
         verify(tagDAOMock).save(tagMock);
     }
 
     @Test
     public void readTagById() throws Exception {
-        tagServiceImplMock.readTagById(8L);
-        verify(tagDAOMock).getOne(8L);
+        when(tagDAOMock.exists(8)).thenReturn(true);
+        tagServiceImplMock.readTagById(8);
+        verify(tagDAOMock).getOne(8);
     }
 
     @Test
     public void deleteTag() throws Exception {
-        tagServiceImplMock.deleteTag(2L);
-        verify(tagDAOMock).delete(2L);
+        when(tagDAOMock.exists(tagMock.getId())).thenReturn(true);
+        tagServiceImplMock.deleteTag(tagMock);
+        verify(tagDAOMock).delete(tagMock);
     }
 
-    @Test
-    public void list() throws Exception {
-        tagServiceImplMock.set(null);
-        verify(tagDAOMock).findAll();
-    }
 
 }

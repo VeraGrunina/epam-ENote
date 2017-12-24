@@ -20,12 +20,12 @@ public class TagServiceImpl implements TagService {
     private UserService userService;
 
     @Override
-    public Tag createTag(Tag tag, Long userId) {
+    public Tag createTag(Tag tag) {
         return tagDAO.save(tag);
     }
 
     @Override
-    public Tag updateTag(Tag tag, Long tagId) {
+    public Tag updateTag(Tag tag, Integer tagId) {
         if (tag.getId().equals(tagId)) {
             return tagDAO.save(tag);
         } else {
@@ -34,7 +34,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag readTagById(Long id) {
+    public Tag readTagById(Integer id) {
         if (!tagDAO.exists(id)) {
             throw new ApplicationRuntimeException("Tag with id: " + id + "doesn't exist");
         }
@@ -42,10 +42,10 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void deleteTag(Long id) {
-        if (!tagDAO.exists(id)) {
-            throw new ApplicationRuntimeException("Tag with id: " + id + "doesn't exist");
+    public void deleteTag(Tag tag) {
+        if (!tagDAO.exists(tag.getId())) {
+            throw new ApplicationRuntimeException("Tag with id: " + tag.getId() + "doesn't exist");
         }
-        tagDAO.delete(id);
+        tagDAO.delete(tag);
     }
 }

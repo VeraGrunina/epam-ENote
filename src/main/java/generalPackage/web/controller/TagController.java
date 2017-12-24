@@ -1,8 +1,15 @@
 package generalPackage.web.controller;
 
-import generalPackage.data.entity.TagWebModel;
+import generalPackage.data.entity.Tag;
+import generalPackage.data.entity.User;
+import generalPackage.exception.ApplicationRuntimeException;
 import generalPackage.service.interfaces.AuthService;
 import generalPackage.service.interfaces.TagService;
+import generalPackage.service.interfaces.UserService;
+import generalPackage.web.model.TagWebModel;
+import generalPackage.web.model.UserWebModel;
+import generalPackage.web.transformer.TagTransformer;
+import generalPackage.web.transformer.UserTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,15 +25,32 @@ import java.util.Set;
 
 @RestController
 public class TagController {
+
     @Autowired
     private TagService tagService;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private TagTransformer tagTransformer;
+    @Autowired
+    private UserTransformer userTransformer;
 
     @PostMapping("/tag")
     @ResponseStatus(HttpStatus.CREATED)
     public void createTag(@RequestBody TagWebModel tagWebModel) {
-        tagWebModel = tagService.createTag(tagWebModel, authService.getCurrentUserId());
+        Integer currentUserId = authService.getCurrentUserId();
+
+        if (currentUserId == null) {
+            return; // redirect:/check
+        }
+
+        User user = userService.readUserById(currentUserId);
+        Tag tag = tagTransformer.bind(tagWebModel);
+        tag.setUser(user);
+
+        tagService.createTag(tag);
         String url = "/" + tagWebModel.getId();
 
         //response.setHeader("Location", url);
@@ -34,23 +58,63 @@ public class TagController {
 
     @PutMapping("/tag/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateTag(@RequestBody TagWebModel tagWebModel, @PathVariable Long tagId) {
-        tagService.updateTag(tagWebModel, tagId);
+    public void updateTag(@RequestBody TagWebModel tagWebModel, @PathVariable Integer tagId) {
+        Integer currentUserId = authService.getCurrentUserId();
+
+        if (currentUserId == null) {
+            return; // redirect:/check
+        }
+
+        User user = userService.readUserById(currentUserId);
+        Tag tag = tagTransformer.bind(tagWebModel);
+        tag.setUser(user);
+
+        tagService.updateTag(tag, tagId);
     }
 
     @GetMapping("/tag/{id}")
-    public TagWebModel findTagById(@PathVariable Long id) {
-        return tagService.readTagById(id);
+    public TagWebModel findTagById(@PathVariable Integer id) {
+        Integer currentUserId = authService.getCurrentUserId();
+
+        if (currentUserId == null) {
+            return null; // redirect:/check
+        }
+
+        Tag tag = tagService.readTagById(id);
+        if (!tag.getUser().getId().equals(currentUserId)) {
+            throw new ApplicationRuntimeException("It's not your tag");
+        }
+
+        return tagTransformer.unbind(tag);
     }
 
     @GetMapping("/tags")
-    public Set<TagWebModel> findAllTags() {
-        return tagService.set(authService.getCurrentUserId());
+    public UserWebModel findAllTags() {
+        Integer currentUserId = authService.getCurrentUserId();
+
+        if (currentUserId == null) {
+            return null; // redirect:/check
+        }
+
+        User user = userService.readUserById(currentUserId);
+        return userTransformer.unbind(user);
     }
 
     @DeleteMapping("/tag/{tagId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeNotebookFromUser(@PathVariable Long tagId) {
-        tagService.deleteTag(tagId);
+    public void removeNotebookFromUser(@PathVariable Integer tagId) {
+        Integer currentUserId = authService.getCurrentUserId();
+
+        if (currentUserId == null) {
+            return; // redirect:/check
+        }
+
+        Tag tag = tagService.readTagById(tagId);
+
+        if(!tag.getUser().getId().equals(currentUserId)) {
+            throw new ApplicationRuntimeException("You can't delete this tag, because it's not your tag");
+        }
+
+        tagService.deleteTag(tag);
     }
 }

@@ -9,7 +9,7 @@ public interface NotebookService {
 
     Notebook createNotebook(Notebook notebook);
 
-    Notebook readNotebookById(Long id);
+    Notebook readNotebookById(Integer id);
 
     Notebook updateNotebook(Notebook notebook);
 

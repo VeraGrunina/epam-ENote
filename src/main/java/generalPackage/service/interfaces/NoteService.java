@@ -6,9 +6,9 @@ public interface NoteService {
 
     Note createNote(Note note);
 
-    Note readNoteById(Long id);
+    Note readNoteById(Integer id);
 
-    Note updateNote(Note note);
+    Note updateNote(Note note, Integer noteId);
 
     void deleteNote(Note note);
 }

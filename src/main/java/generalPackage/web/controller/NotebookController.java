@@ -10,15 +10,20 @@ import generalPackage.web.model.UserWebModel;
 import generalPackage.web.transformer.NotebookTransformer;
 import generalPackage.web.transformer.UserTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import javax.validation.Valid;
+import javax.validation.ValidationException;
+
+@RestController
+//@Api(value = "Hello World", description = "Hello World Controller")
 public class NotebookController {
 
     @Autowired
@@ -33,11 +38,18 @@ public class NotebookController {
     private NotebookTransformer notebookTransformer;
 
     @PostMapping("/notebook")
-    public void createNotebook(@RequestBody NotebookWebModel notebookWebModel) {
-        Long currentUserId = authService.getCurrentUserId();
+    public void createNotebook(@RequestBody @Valid NotebookWebModel notebookWebModel, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException(String.format(
+                    "NotebookWebModel has %s validation counts",
+                    bindingResult.getFieldErrorCount()));
+        }
+
+        Integer currentUserId = authService.getCurrentUserId();
 
         if (currentUserId == null) {
-            return; // redirect:/login
+            return; // redirect:/check
         }
 
         User user = userService.readUserById(currentUserId);
@@ -48,11 +60,11 @@ public class NotebookController {
     }
 
     @PutMapping("/notebook/{id}")
-    public void updateNotebook(@RequestBody NotebookWebModel notebookWebModel, @PathVariable Long id) {
-        Long currentUserId = authService.getCurrentUserId();
+    public void updateNotebook(@RequestBody NotebookWebModel notebookWebModel, @PathVariable Integer id) {
+        Integer currentUserId = authService.getCurrentUserId();
 
         if (currentUserId == null) {
-            return; // redirect:/login
+            return; // redirect:/check
         }
 
         User user = userService.readUserById(currentUserId);
@@ -63,11 +75,11 @@ public class NotebookController {
     }
 
     @GetMapping("/notebook/{id}")
-    public NotebookWebModel findNotebookById(@PathVariable Long id) {
-        Long currentUserId = authService.getCurrentUserId();
+    public NotebookWebModel findNotebookById(@PathVariable Integer id) {
+        Integer currentUserId = authService.getCurrentUserId();
 
         if (currentUserId == null) {
-            return null; // redirect:/login
+            return null; // redirect:/check
         }
 
         Notebook notebook = notebookService.readNotebookById(id);
@@ -80,7 +92,7 @@ public class NotebookController {
 
     @GetMapping("/notebooks")
     public UserWebModel findAllNotebooks() {
-        Long currentUserId = authService.getCurrentUserId();
+        Integer currentUserId = authService.getCurrentUserId();
 
         if (currentUserId == null) {
             return null; // redirect:/login
@@ -91,11 +103,11 @@ public class NotebookController {
     }
 
     @DeleteMapping("/notebook/{id}")
-    public void removeNotebookFromUser(@PathVariable Long id) {
-        Long currentUserId = authService.getCurrentUserId();
+    public void removeNotebookFromUser(@PathVariable Integer id) {
+        Integer currentUserId = authService.getCurrentUserId();
 
         if (currentUserId == null) {
-            return; // redirect:/login
+            return; // redirect:/check
         }
 
         Notebook notebook = notebookService.readNotebookById(id);

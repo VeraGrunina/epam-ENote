@@ -9,13 +9,13 @@ public interface UserService {
 
     User updateUser(User user);
 
-    User readUserById(Long id);
+    User readUserById(Integer id);
 
     User readUserByLogin(String login);
 
-    void deleteUser(User user);
+    void deleteUser(Integer id);
 
-    boolean exists(String login);
+    boolean existsUser(Integer id);
 
-    boolean exists(Long id);
+    boolean existsUser(String login);
 }

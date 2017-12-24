@@ -1,16 +1,24 @@
 package generalPackage.web.controller;
 
-import generalPackage.data.entity.UserWebModel;
+import generalPackage.data.entity.User;
+import generalPackage.exception.UnprocessableEntityException;
 import generalPackage.service.interfaces.AuthService;
 import generalPackage.service.interfaces.UserService;
+import generalPackage.web.model.UserWebModel;
+import generalPackage.web.transformer.UserTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+import javax.validation.Valid;
+import javax.validation.ValidationException;
+
+@RestController
 public class RegistrationController {
 
     @Autowired
@@ -19,35 +27,36 @@ public class RegistrationController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/register")
-    public ModelAndView getRegister() {
-        return new ModelAndView("Hello from reg");
+    @Autowired
+    private UserTransformer userTransformer;
+
+    @GetMapping("/reg")
+    public String getRegister() {
+        return "Hello from reg";
     }
 
-    @PostMapping("/register")
-    public ModelAndView postRegister(
-            @PathVariable String login,
-            @PathVariable String password) {
+    @PostMapping(value = "/reg", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ModelAndView addUser(@RequestBody @Valid UserWebModel userWebModel, BindingResult bindingResult) {
 
-        if (userService.exists(login)) {
-            return new ModelAndView("redirect:/register");
-            //TODO login taked
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException(String.format(
+                    "UserWebModel has %s validation counts",
+                    bindingResult.getFieldErrorCount()));
         }
 
+        if (userService.existsUser(userWebModel.getLogin()))
+            throw new UnprocessableEntityException(String.format(
+                    "User with login '%s' already exists",
+                    userWebModel.getLogin())
+            );
 
-        authService.saveUserPassword(user.getId());
+        User user = userTransformer.bind(userWebModel);
+        userService.createUser(user);
 
+        authService.saveUserPassword(user, userWebModel.getPassword());
+        authService.setCurrentUserId(user.getId());
 
-        Hash hash = Hash.builder().hash(AuthService.hashPassword(password)).build();
-        UserWebModel newUser = UserWebModel.builder()
-                .login(login)
-                .name(name)
-                .hash(hash)
-                .build();
-        userService.createUser(newUser);
-        return new ModelAndView("redirect:/login");
-        //TODO say success
+        return new ModelAndView("notebooks");
+//        return new ModelAndView("redirect:/notebooks");
     }
-
-
 }

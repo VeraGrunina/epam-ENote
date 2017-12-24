@@ -17,7 +17,7 @@ import java.util.Set;
 public class Tag {
 
     @Id
-    private Long id;
+    private Integer id;
 
     private String name;
 
@@ -35,8 +35,10 @@ public class Tag {
 }
 
 //CREATE TABLE tag (
-//    id           BIGINT       AUTO_INCREMENT,
+//    id           INT          AUTO_INCREMENT,
+//    user_id      INT          NOT NULL,
 //    name         VARCHAR(45)  NOT NULL,
 //
-//    CONSTRAINT tag_pk PRIMARY KEY (id)
+//    CONSTRAINT tag_pk PRIMARY KEY (id),
+//    CONSTRAINT tag__user_id_fk FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
 //);
