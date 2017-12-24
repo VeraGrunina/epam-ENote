@@ -35,14 +35,14 @@ public class TagServiceTest {
 
     @Test
     public void updateTag() throws Exception {
-        tagServiceImplMock.updateTag(tagMock, 1L);
+        tagServiceImplMock.updateTag(tagMock, 1);
         verify(tagDAOMock).save(tagMock);
     }
 
     @Test
     public void readTagById() throws Exception {
-        tagServiceImplMock.readTagById(8L);
-        verify(tagDAOMock).getOne(8L);
+        tagServiceImplMock.readTagById(8);
+        verify(tagDAOMock).getOne(8);
     }
 
     @Test

@@ -58,10 +58,9 @@ public class UserTransformer implements Transformer<User, UserWebModel> {
 }
 
 //CREATE TABLE user (
-//    id           BIGINT       AUTO_INCREMENT,
+//    id           INT          AUTO_INCREMENT,
 //    name         VARCHAR(45)  NOT NULL,
-//    login        VARCHAR(45)  NOT NULL,
-//    password     VARCHAR(45)  NOT NULL,
+//    check        VARCHAR(45)  NOT NULL,
 //
 //    CONSTRAINT user_pk PRIMARY KEY (id)
 //);

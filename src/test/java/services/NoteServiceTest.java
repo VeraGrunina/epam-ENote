@@ -37,21 +37,21 @@ public class NoteServiceTest {
 
   @Test
   public void updateNote() throws Exception {
-    when(noteMock.getId()).thenReturn(13L);
-    noteServiceImplMock.updateNote(noteMock, 13L);
+    when(noteMock.getId()).thenReturn(13);
+    noteServiceImplMock.updateNote(noteMock, 13);
     verify(noteDAOMock).save(noteMock);
   }
 
   @Test
   public void readNoteById() throws Exception {
-    when(noteDAOMock.exists(4L)).thenReturn(true);
-    noteServiceImplMock.readNoteById(4L);
-    verify(noteDAOMock).getOne(4L);
+    when(noteDAOMock.exists(4)).thenReturn(true);
+    noteServiceImplMock.readNoteById(4);
+    verify(noteDAOMock).getOne(4);
   }
 
   @Test
   public void deleteNote() throws Exception {
-    when(noteDAOMock.exists(7L)).thenReturn(true);
+    when(noteDAOMock.exists(7)).thenReturn(true);
     noteServiceImplMock.deleteNote(noteMock);
     verify(noteDAOMock).delete(noteMock);
   }

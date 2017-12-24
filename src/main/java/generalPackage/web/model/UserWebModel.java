@@ -12,20 +12,21 @@ public class UserWebModel {
 
     private String login;
 
+    private String password;
+
     private List<String> notebookNames = new ArrayList<>();
 
-    private List<Long> notebookIds = new ArrayList<>();
+    private List<Integer> notebookIds = new ArrayList<>();
 
     private List<String> tagNames = new ArrayList<>();
 
-    private List<Long> tagIds = new ArrayList<>();
+    private List<Integer> tagIds = new ArrayList<>();
 }
 
 //CREATE TABLE user (
-//    id           BIGINT       AUTO_INCREMENT,
+//    id           INT          AUTO_INCREMENT,
 //    name         VARCHAR(45)  NOT NULL,
-//    login        VARCHAR(45)  NOT NULL,
-//    password     VARCHAR(45)  NOT NULL,
+//    check        VARCHAR(45)  NOT NULL,
 //
 //    CONSTRAINT user_pk PRIMARY KEY (id)
 //);

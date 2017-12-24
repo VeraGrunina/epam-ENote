@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 
 @Data
 @Entity
-public class Hash {
+public class Credit {
 
     private String hash;
 
@@ -18,8 +18,8 @@ public class Hash {
 }
 
 //CREATE TABLE hash (
-//    user_id      BIGINT       NOT NULL,
+//    user_id      INT          NOT NULL,
 //    hash         VARCHAR(60)  NOT NULL,
 //
-//    CONSTRAINT hash__user_id_fk FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
+//    CONSTRAINT credit__user_id_fk FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
 //);

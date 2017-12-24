@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class NoteWebModel {
 
-    private Long id;
+    private Integer id;
 
     private String name;
 
@@ -16,12 +16,12 @@ public class NoteWebModel {
 
     private List<String> tagNames = new ArrayList<>();
 
-    private List<Long> tagIds = new ArrayList<>();
+    private List<Integer> tagIds = new ArrayList<>();
 }
 
 //CREATE TABLE note (
-//    id           BIGINT       AUTO_INCREMENT,
-//    notebook_id  BIGINT       NOT NULL,
+//    id           INT          AUTO_INCREMENT,
+//    notebook_id  INT          NOT NULL,
 //    name         VARCHAR(45)  NOT NULL,
 //    text         VARCHAR      NOT NULL,
 //

@@ -15,7 +15,7 @@ import java.util.Set;
 public class Note {
 
     @Id
-    private Long id;
+    private Integer id;
 
     private String name;
 
@@ -30,8 +30,8 @@ public class Note {
 }
 
 //CREATE TABLE note (
-//    id           BIGINT       AUTO_INCREMENT,
-//    notebook_id  BIGINT       NOT NULL,
+//    id           INT          AUTO_INCREMENT,
+//    notebook_id  INT          NOT NULL,
 //    name         VARCHAR(45)  NOT NULL,
 //    text         VARCHAR      NOT NULL,
 //

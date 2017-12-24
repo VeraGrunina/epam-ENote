@@ -24,7 +24,7 @@ public class NotebookServiceImpl implements NotebookService {
     }
 
     @Override
-    public Notebook readNotebookById(Long id) {
+    public Notebook readNotebookById(Integer id) {
         return notebookDAO.getOne(id);
     }
 

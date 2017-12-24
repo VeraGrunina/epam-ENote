@@ -43,10 +43,10 @@ CREATE TABLE tag_note (
   CONSTRAINT tag_note__note_id_fk FOREIGN KEY (note_id) REFERENCES note (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE hash (
+CREATE TABLE credit (
     user_id      INT          NOT NULL,
     hash         VARCHAR(60)  NOT NULL,
 
-    CONSTRAINT hash__user_id_fk FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT credit__user_id_fk FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 

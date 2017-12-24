@@ -25,7 +25,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag updateTag(Tag tag, Long tagId) {
+    public Tag updateTag(Tag tag, Integer tagId) {
         if (tag.getId().equals(tagId)) {
             return tagDAO.save(tag);
         } else {
@@ -34,7 +34,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag readTagById(Long id) {
+    public Tag readTagById(Integer id) {
         if (!tagDAO.exists(id)) {
             throw new ApplicationRuntimeException("Tag with id: " + id + "doesn't exist");
         }

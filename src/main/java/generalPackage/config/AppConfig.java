@@ -1,7 +1,7 @@
 package generalPackage.config;
 
-import generalPackage.data.dao.HashDAO;
-import generalPackage.service.impl.HashServiceImpl;
+import generalPackage.data.dao.CreditDAO;
+import generalPackage.service.impl.CreditServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,9 +20,9 @@ import javax.sql.DataSource;
 
 @Configuration
 @PropertySource("database.properties")
-@EnableJpaRepositories(basePackageClasses = HashDAO.class)
+@EnableJpaRepositories(basePackageClasses = CreditDAO.class)
 @ComponentScan(basePackageClasses = {
-        HashServiceImpl.class,
+        CreditServiceImpl.class,
 })
 public class AppConfig {
 

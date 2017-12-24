@@ -40,10 +40,10 @@ public class TagController {
     @PostMapping("/tag")
     @ResponseStatus(HttpStatus.CREATED)
     public void createTag(@RequestBody TagWebModel tagWebModel) {
-        Long currentUserId = authService.getCurrentUserId();
+        Integer currentUserId = authService.getCurrentUserId();
 
         if (currentUserId == null) {
-            return; // redirect:/login
+            return; // redirect:/check
         }
 
         User user = userService.readUserById(currentUserId);
@@ -58,11 +58,11 @@ public class TagController {
 
     @PutMapping("/tag/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateTag(@RequestBody TagWebModel tagWebModel, @PathVariable Long tagId) {
-        Long currentUserId = authService.getCurrentUserId();
+    public void updateTag(@RequestBody TagWebModel tagWebModel, @PathVariable Integer tagId) {
+        Integer currentUserId = authService.getCurrentUserId();
 
         if (currentUserId == null) {
-            return; // redirect:/login
+            return; // redirect:/check
         }
 
         User user = userService.readUserById(currentUserId);
@@ -73,11 +73,11 @@ public class TagController {
     }
 
     @GetMapping("/tag/{id}")
-    public TagWebModel findTagById(@PathVariable Long id) {
-        Long currentUserId = authService.getCurrentUserId();
+    public TagWebModel findTagById(@PathVariable Integer id) {
+        Integer currentUserId = authService.getCurrentUserId();
 
         if (currentUserId == null) {
-            return null; // redirect:/login
+            return null; // redirect:/check
         }
 
         Tag tag = tagService.readTagById(id);
@@ -90,10 +90,10 @@ public class TagController {
 
     @GetMapping("/tags")
     public UserWebModel findAllTags() {
-        Long currentUserId = authService.getCurrentUserId();
+        Integer currentUserId = authService.getCurrentUserId();
 
         if (currentUserId == null) {
-            return null; // redirect:/login
+            return null; // redirect:/check
         }
 
         User user = userService.readUserById(currentUserId);
@@ -102,11 +102,11 @@ public class TagController {
 
     @DeleteMapping("/tag/{tagId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeNotebookFromUser(@PathVariable Long tagId) {
-        Long currentUserId = authService.getCurrentUserId();
+    public void removeNotebookFromUser(@PathVariable Integer tagId) {
+        Integer currentUserId = authService.getCurrentUserId();
 
         if (currentUserId == null) {
-            return; // redirect:/login
+            return; // redirect:/check
         }
 
         Tag tag = tagService.readTagById(tagId);

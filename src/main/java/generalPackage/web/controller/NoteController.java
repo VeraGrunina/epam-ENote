@@ -3,6 +3,7 @@ package generalPackage.web.controller;
 import generalPackage.data.entity.Note;
 import generalPackage.data.entity.Notebook;
 import generalPackage.exception.ApplicationRuntimeException;
+import generalPackage.service.interfaces.NoteService;
 import generalPackage.service.interfaces.NotebookService;
 import generalPackage.web.model.NoteWebModel;
 import generalPackage.web.model.NotebookWebModel;
@@ -10,10 +11,15 @@ import generalPackage.web.transformer.NoteTransformer;
 import generalPackage.web.transformer.NotebookTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-import generalPackage.service.interfaces.NoteService;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/notebook/{notebookId}")
@@ -30,7 +36,7 @@ public class NoteController {
 
     @PostMapping("/note")
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody NoteWebModel noteWebModel, @PathVariable("notebookId") Long notebookId) {
+    public void create(@RequestBody NoteWebModel noteWebModel, @PathVariable("notebookId") Integer notebookId) {
 
         Notebook notebook = notebookService.readNotebookById(notebookId);
         Note note = noteTransformer.bind(noteWebModel);
@@ -45,15 +51,15 @@ public class NoteController {
 
     @PutMapping("/note/{noteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateNote(@PathVariable("noteId") Long noteId, @RequestBody NoteWebModel noteWebModel) {
+    public void updateNote(@PathVariable("noteId") Integer noteId, @RequestBody NoteWebModel noteWebModel) {
         Note note = noteTransformer.bind(noteWebModel);
 
         noteService.updateNote(note, noteId);
     }
 
     @GetMapping("/note/{noteId}")
-    public NoteWebModel findNoteById(@PathVariable("noteId") Long noteId,
-                                     @PathVariable("notebookId") Long notebookId) {
+    public NoteWebModel findNoteById(@PathVariable("noteId") Integer noteId,
+                                     @PathVariable("notebookId") Integer notebookId) {
 
         Note note = noteService.readNoteById(noteId);
 
@@ -65,7 +71,7 @@ public class NoteController {
     }
 
     @GetMapping("/notes")
-    public NotebookWebModel findAllNotes(@PathVariable("notebookId") Long notebookId) {
+    public NotebookWebModel findAllNotes(@PathVariable("notebookId") Integer notebookId) {
         Notebook notebook = notebookService.readNotebookById(notebookId);
 
         return notebookTransformer.unbind(notebook);
@@ -73,8 +79,8 @@ public class NoteController {
 
     @DeleteMapping("/note/{noteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeNoteFromNotebook(@PathVariable Long noteId,
-                                       @PathVariable("notebookId") Long notebookId) {
+    public void removeNoteFromNotebook(@PathVariable Integer noteId,
+                                       @PathVariable("notebookId") Integer notebookId) {
         Note note = noteService.readNoteById(noteId);
 
         if (!note.getNotebook().getId().equals(notebookId)) {
