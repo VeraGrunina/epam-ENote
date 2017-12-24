@@ -40,16 +40,16 @@ public class NotebookServiceTest {
 
     @Test
     public void updateNotebook() throws Exception {
-        when(notebookMock.getId()).thenReturn(2L);
+        when(notebookMock.getId()).thenReturn(2);
         notebookServiceImplMock.updateNotebook(notebookMock);
         verify(notebookDAOMock).save(notebookMock);
     }
 
     @Test
     public void readNotebookById() throws Exception {
-        when(notebookDAOMock.exists(51L)).thenReturn(true);
-        notebookServiceImplMock.readNotebookById(51L);
-        verify(notebookDAOMock).getOne(51L);
+        when(notebookDAOMock.exists(51)).thenReturn(true);
+        notebookServiceImplMock.readNotebookById(51);
+        verify(notebookDAOMock).getOne(51);
     }
 
     @Test
@@ -61,6 +61,6 @@ public class NotebookServiceTest {
     @Test
     public void list() throws Exception {
         notebookServiceImplMock.list(userMock);
-        verify(notebookDAOMock).findAll();
+        verify(userMock).getNotebooks();
     }
 }

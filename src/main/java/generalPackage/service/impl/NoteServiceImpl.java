@@ -1,14 +1,10 @@
 package generalPackage.service.impl;
 
-import generalPackage.exception.ApplicationRuntimeException;
-import generalPackage.data.entity.Note;
-import generalPackage.data.entity.Notebook;
 import generalPackage.data.dao.NoteDAO;
+import generalPackage.data.entity.Note;
+import generalPackage.service.interfaces.NoteService;
 import generalPackage.service.interfaces.NotebookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import generalPackage.service.interfaces.NoteService;
-
-import java.util.List;
 
 public class NoteServiceImpl implements NoteService {
 
@@ -27,28 +23,17 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public Note updateNote(Note note, Long noteId) {
-        if (note.getId().equals(noteId)) {
-            return noteDAO.save(note);
-        } else {
-            throw new ApplicationRuntimeException("You can't update this Node because it doesn't exist");
-        }
+    public Note updateNote(Note note, Integer noteId) {
+        return noteDAO.save(note);
     }
 
     @Override
-    public Note readNoteById(Long id) {
-        if (!noteDAO.exists(id)) {
-            throw new ApplicationRuntimeException("Note with id: " + id + " doesn't exist");
-        }
-
+    public Note readNoteById(Integer id) {
         return noteDAO.getOne(id);
     }
 
     @Override
     public void deleteNote(Note note) {
-        if (!noteDAO.exists(note.getId())) {
-            throw new ApplicationRuntimeException("Note with id: " + note.getId() + " doesn't exist");
-        }
         noteDAO.delete(note);
     }
 }

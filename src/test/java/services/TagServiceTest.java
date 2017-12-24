@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TagServiceTest {
@@ -35,18 +36,21 @@ public class TagServiceTest {
 
     @Test
     public void updateTag() throws Exception {
-        tagServiceImplMock.updateTag(tagMock, 1L);
+        when(tagMock.getId()).thenReturn(1);
+        tagServiceImplMock.updateTag(tagMock, 1);
         verify(tagDAOMock).save(tagMock);
     }
 
     @Test
     public void readTagById() throws Exception {
-        tagServiceImplMock.readTagById(8L);
-        verify(tagDAOMock).getOne(8L);
+        when(tagDAOMock.exists(8)).thenReturn(true);
+        tagServiceImplMock.readTagById(8);
+        verify(tagDAOMock).getOne(8);
     }
 
     @Test
     public void deleteTag() throws Exception {
+        when(tagDAOMock.exists(tagMock.getId())).thenReturn(true);
         tagServiceImplMock.deleteTag(tagMock);
         verify(tagDAOMock).delete(tagMock);
     }

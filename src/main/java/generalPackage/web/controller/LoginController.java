@@ -1,16 +1,23 @@
 package generalPackage.web.controller;
 
 import generalPackage.data.entity.User;
+import generalPackage.exception.ApplicationRuntimeException;
 import generalPackage.service.interfaces.AuthService;
 import generalPackage.service.interfaces.UserService;
+import generalPackage.web.model.UserWebModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+import javax.validation.ValidationException;
+
+@RestController
 public class LoginController {
 
     @Autowired
@@ -19,18 +26,30 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/login")
-    public ModelAndView login(@PathVariable String login, @PathVariable String password) {
-
-        User user = userService.readUserByLogin(login);
-        if (!authService.login(user.getId(), password))
-            return new ModelAndView("redirect:/login");
-
-        return new ModelAndView(String.format("redirect:/userWebModel/%d/notebooks", user.getId()));
+    @GetMapping("/login")
+    public ResponseEntity<String> getRegister() {
+        return new ResponseEntity<>("Hello from login", HttpStatus.OK);
     }
 
-    @GetMapping("/login")
-    public ModelAndView login() {
-        return new ModelAndView("Hello from login");
+    @PostMapping("/login")
+    public ModelAndView addUser(@RequestBody UserWebModel userWebModel, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException(String.format(
+                    "UserDataModel has %s validation counts",
+                    bindingResult.getFieldErrorCount()));
+        }
+
+        User expectedUser = userService.readUserByLogin(userWebModel.getLogin());
+        if (expectedUser == null)
+            throw new ApplicationRuntimeException("Wrong login");
+
+        if (!authService.check(expectedUser, userWebModel.getPassword()))
+            throw new ApplicationRuntimeException("Wrong password");
+
+        authService.setCurrentUserId(expectedUser.getId());
+
+        return new ModelAndView("notebooks");
+//        return new ModelAndView("redirect:/notebooks");
     }
 }

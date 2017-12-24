@@ -15,7 +15,7 @@ import java.util.Set;
 public class Notebook {
 
     @Id
-    private Long id;
+    private Integer id;
 
     private String name;
 
@@ -28,9 +28,9 @@ public class Notebook {
 }
 
 //CREATE TABLE notebook (
-//    id           BIGINT       AUTO_INCREMENT,
+//    id           INT          AUTO_INCREMENT,
 //    name         VARCHAR(45)  NOT NULL,
-//    user_id      BIGINT       NOT NULL,
+//    user_id      INT          NOT NULL,
 //
 //    CONSTRAINT notebook_pk PRIMARY KEY (id),
 //    CONSTRAINT notebook__user_id_fk FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE

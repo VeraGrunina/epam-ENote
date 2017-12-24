@@ -42,14 +42,14 @@ public class UserServiceTest {
 
     @Test
     public void readUserById() throws Exception {
-        when(userDAOMock.exists(13L)).thenReturn(true);
-        userServiceImplMock.readUserById(13L);
-        verify(userDAOMock).findOne(13L);
+        when(userDAOMock.exists(13)).thenReturn(true);
+        userServiceImplMock.readUserById(13);
+        verify(userDAOMock).findOne(13);
     }
 
     @Test
     public void deleteUser() throws Exception {
-        userServiceImplMock.deleteUser(15L);
-        verify(userDAOMock).delete(15L);
+        userServiceImplMock.deleteUser(15);
+        verify(userDAOMock).delete(15);
     }
 }

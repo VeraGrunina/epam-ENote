@@ -1,24 +1,23 @@
 CREATE TABLE user (
-  id           BIGINT       AUTO_INCREMENT,
+  id           INT          AUTO_INCREMENT,
   name         VARCHAR(45)  NOT NULL,
   login        VARCHAR(45)  NOT NULL,
-  password     VARCHAR(45)  NOT NULL,
 
   CONSTRAINT user_pk PRIMARY KEY (id)
 );
 
 CREATE TABLE notebook (
-  id           BIGINT       AUTO_INCREMENT,
+  id           INT          AUTO_INCREMENT,
   name         VARCHAR(45)  NOT NULL,
-  user_id      BIGINT       NOT NULL,
+  user_id      INT          NOT NULL,
 
   CONSTRAINT notebook_pk PRIMARY KEY (id),
   CONSTRAINT notebook__user_id_fk FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE note (
-  id           BIGINT       AUTO_INCREMENT,
-  notebook_id  BIGINT       NOT NULL,
+  id           INT          AUTO_INCREMENT,
+  notebook_id  INT          NOT NULL,
   name         VARCHAR(45)  NOT NULL,
   text         VARCHAR      NOT NULL,
 
@@ -27,25 +26,27 @@ CREATE TABLE note (
 );
 
 CREATE TABLE tag (
-  id           BIGINT       AUTO_INCREMENT,
+  id           INT          AUTO_INCREMENT,
+  user_id      INT          NOT NULL,
   name         VARCHAR(45)  NOT NULL,
 
-  CONSTRAINT tag_pk PRIMARY KEY (id)
+  CONSTRAINT tag_pk PRIMARY KEY (id),
+  CONSTRAINT tag__user_id_fk FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE tag_note (
-  note_id      BIGINT       NOT NULL,
-  tag_id       BIGINT       NOT NULL,
+  note_id      INT          NOT NULL,
+  tag_id       INT          NOT NULL,
 
   CONSTRAINT tag_note__note_id_tag_id_unq UNIQUE (note_id, tag_id),
   CONSTRAINT tag_note__tag_id_fk FOREIGN KEY (tag_id) REFERENCES tag (id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT tag_note__note_id_fk FOREIGN KEY (note_id) REFERENCES note (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE hash (
-    user_id      BIGINT       NOT NULL,
+CREATE TABLE credit (
+    user_id      INT          NOT NULL,
     hash         VARCHAR(60)  NOT NULL,
 
-    CONSTRAINT hash__user_id_fk FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT credit__user_id_fk FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 

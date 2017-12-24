@@ -1,70 +1,66 @@
 package generalPackage.service.impl;
 
-import generalPackage.data.entity.Hash;
-import generalPackage.service.interfaces.HashService;
-import generalPackage.service.interfaces.UserService;
+import generalPackage.data.entity.Credit;
+import generalPackage.data.entity.User;
 import generalPackage.service.interfaces.AuthService;
+import generalPackage.service.interfaces.CreditService;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Data
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private static int workload = 12;
-
     @Autowired
-    private UserService userService;
+    private CreditService creditService;
 
-    @Autowired
-    private HashService hashService;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private static final int WORKLOAD = 12;
 
-    private Long currentUserId;
+    private Integer currentUserId;
 
-    private String hashPassword(String password_plaintext) {
-        String salt = BCrypt.gensalt(workload);
-        String hashed_password = BCrypt.hashpw(password_plaintext, salt);
+    private String hashPassword(String password) {
 
-        return (hashed_password);
+        String salt = BCrypt.gensalt(WORKLOAD);
+        return BCrypt.hashpw(password, salt);
     }
 
     @Override
-    public Long getCurrentUserId() {
-        return currentUserId;
-    }
+    public boolean check(User user, String password) {
 
-    @Override
-    public void setCurrentUserId(Long currentUserId) {
-        this.currentUserId = currentUserId;
-    }
+        Credit credit = creditService.readCreditByUser(user);
+        String hash = credit.getHash();
 
-    @Override
-    public boolean login(Long userId, String password) {
-        Hash hash = hashService.readHashByUserId(userId);
-        String storedHash = hash.getHash();
-
-        if (null == storedHash || !storedHash.startsWith("$2a$"))
-            throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
-
-        if (!BCrypt.checkpw(password, storedHash))
+        if (!BCrypt.checkpw(password, hash))
             return false;
 
-        setCurrentUserId(userId);
+        setCurrentUserId(user.getId());
         return true;
     }
 
     @Override
-    public boolean register(Long userId, String password) {
-        return false;
+    public void saveUserPassword(User user, String password) {
+
+        Credit credit = new Credit();
+        credit.setUser(user);
+        credit.setHash(hashPassword(password));
+
+        creditService.createCredit(credit);
     }
 }
 
 
-//CREATE TABLE user_hash (
-//    user_id      BIGINT       NOT NULL,
+//CREATE TABLE user_credit (
+//    user_id      INT          NOT NULL,
 //    hash         VARCHAR(60)  NOT NULL,
 //
-//    CONSTRAINT user_hash__user_id_fk FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
+//    CONSTRAINT user_credit__user_id_fk FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
 //);
 //
 // jBCrypt: http://www.mindrot.org/projects/jBCrypt/
