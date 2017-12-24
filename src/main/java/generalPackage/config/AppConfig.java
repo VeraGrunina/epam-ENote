@@ -1,5 +1,7 @@
-package repositories;
+package generalPackage.config;
 
+import generalPackage.data.dao.HashDAO;
+import generalPackage.service.impl.HashServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,21 +17,22 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.sql.SQLException;
 
 @Configuration
 @PropertySource("database.properties")
-@EnableJpaRepositories("repositories")
-@ComponentScan(basePackages = "model")
-public class TestConfig {
+@EnableJpaRepositories(basePackageClasses = HashDAO.class)
+@ComponentScan(basePackageClasses = {
+        HashServiceImpl.class,
+})
+public class AppConfig {
 
     @Bean
-    public DataSource h2dataSource() throws SQLException {
+    public DataSource h2dataSource() {
         return new EmbeddedDatabaseBuilder()
-                .setName("testDatabase")
+                .setName("realDatabase")
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("init.sql")
-                .addScript("insertInDatabase")
+                .addScript("insert.sql")
                 .build();
     }
 
@@ -43,12 +46,8 @@ public class TestConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        try {
-            em.setDataSource(h2dataSource());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        em.setPackagesToScan("model");
+        em.setDataSource(h2dataSource());
+        em.setPackagesToScan("generalPackage.data.entity");
         em.setJpaVendorAdapter(jpaVendorAdapter());
         return em;
     }

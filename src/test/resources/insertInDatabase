@@ -1,5 +1,0 @@
-INSERT INTO userWebModel
-(id, name, login, password)
-VALUES
-(1L, 'Vera', 'vera76532', 'testPassword'),
-(2L, 'name2', 'login2', 'password2');
